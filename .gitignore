@@ -1,2 +1,5 @@
 *.pyc
 *.iml
+.idea
+data/model
+mi_vmw.egg-info
