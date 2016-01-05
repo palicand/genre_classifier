@@ -8,9 +8,9 @@ import re
 import pandas as pd
 import genre_classifier.classifier
 import genre_classifier.data_preprocessing
-
+import essentia.standard as st
 app = Flask(__name__)
-classifier = None
+classifier = genre_classifier.classifier.load_classifier("../data/model.pkl")
 
 HTML_REGEX = re.compile(r'.+?\.html')
 
@@ -30,11 +30,11 @@ def process_files():
         app.logger.debug(data)
 
         prediction = classifier.predict_proba(data)
-        #amplitude = st.MonoLoader(filename=tmp_file_name)()
-        amplitude = []
+        amplitude = st.MonoLoader(filename=tmp_file_name)()
+        #amplitude = []
         return jsonify({"prediction": zip(classifier.classes_,
                                                prediction[0].tolist()),
-                        "amplitude": amplitude})
+                        "amplitude": amplitude[:-1:1000].tolist()})
 
 
 @app.route('/', defaults={'path': 'index.html'})
@@ -55,7 +55,7 @@ def catch_all(path):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(description="Server")
-    parser.add_argument("model_location", type=str)
+    parser.add_argument("model_location", type=str, default="../data/model.pkl")
     return parser.parse_args(argv)
 
 

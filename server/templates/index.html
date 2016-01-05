@@ -4,14 +4,16 @@
 
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style/style.css')}}" type="text/css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="main-wrapper">
         <h1>MI-VMW</h1>
         <br>
         <div id="main"></div>
     </div>
     <script src="{{ url_for('static', filename='bower_component/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bower_component/highcharts/highcharts.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/js/main.js') }}"></script>
 
 </body>

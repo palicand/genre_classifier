@@ -28,6 +28,7 @@
     "react": "^0.14.5",
     "react-dom": "^0.14.5",
     "react-dropzone": "^3.3.0",
+    "react-highcharts": "^6.0.0",
     "superagent": "^1.6.1"
   }
 }
