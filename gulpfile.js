@@ -24,5 +24,9 @@ gulp.task('clean', function () {
 
 gulp.task('default', function() {
     gulp.start('transform');
+});
+
+gulp.task('debug', function() {
+    gulp.start('transform');
     gulp.watch('./server/static/scripts/jsx/main.js', ['transform']);
 });
