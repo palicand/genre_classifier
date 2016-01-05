@@ -5,3 +5,7 @@ data/model
 mi_vmw.egg-info
 *.log
 *.csv
+node_modules
+server/static/bower_component
+data
+server/static/scripts/js
