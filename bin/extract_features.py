@@ -20,6 +20,7 @@ def __parse_arguments(argv):
 
     return parser.parse_args(argv)
 
+
 def mfcc_wrapper(**kwargs):
     def wrapper(spectrum):
         _, coef = f(spectrum)
@@ -27,8 +28,6 @@ def mfcc_wrapper(**kwargs):
     f = st.MFCC(**kwargs)
 
     return wrapper
-
-
 
 def main(argv=None):
     if argv == None:

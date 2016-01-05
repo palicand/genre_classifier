@@ -1,0 +1,34 @@
+{
+  "name": "vmw",
+  "version": "1.0.0",
+  "description": "A semestral project for MI-VMW",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.fit.cvut.cz:palicand/mi-vmw.git"
+  },
+  "author": "Alena Sochurkova <sochuale@fit.cvut.cz>",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-size": "^2.0.0",
+    "reactify": "^1.1.1"
+  },
+  "dependencies": {
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5",
+    "react-dropzone": "^3.3.0",
+    "react-highcharts": "^6.0.0",
+    "superagent": "^1.6.1"
+  }
+}

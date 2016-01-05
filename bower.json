@@ -1,0 +1,31 @@
+{
+  "name": "MI-VMW",
+  "authors": [
+    "Alena Sochurkova <sochuale@fit.cvut.cz>",
+    "Andrej Palicka <palicand@fit.cvut.cz>"
+  ],
+  "description": "A semestral project",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "FIT",
+    "CTU"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6",
+    "react": "~0.14.5",
+    "highcharts": "highcharts-release#~4.2.1",
+    "react-dropzone": "~3.3.0"
+  }
+}

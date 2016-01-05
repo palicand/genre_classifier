@@ -26,11 +26,14 @@ def train_model(x, y, model_parameters, model_cls=svm.SVC):
        Returns a *sklearn* model."""
     logger = log.get_logger(__name__)
     if isinstance(model_parameters, list):
-
+        leave_p_out = cv.LeavePOut(len(x), 4)
         model = grid_search.GridSearchCV(model_cls(),
                                          model_parameters,
-                                         cv=2)
+                                         cv=3, n_jobs=4,
+                                         scoring="f1_macro",
+                                         )
         model.fit(x.values, y["class"].values)
+        print("Ideal parameters {0}".format(model.best_params_))
     else:
         model = model_cls(**model_parameters)
         model.fit(x.values, y["class"].values)
@@ -52,40 +55,51 @@ def main(argv=None):
     df = pd.DataFrame.from_csv(args.data_location)
     x = df[df.columns[:-1]]
     y = df["class"]
-    encoder = prep.LabelEncoder()
-    y = pd.DataFrame(encoder.fit_transform(y), columns=["class"])
+    y = pd.DataFrame(y, columns=['class'])
+    #encoder = prep.LabelEncoder()
+    #y = pd.DataFrame(encoder.fit_transform(y), columns=["class"])
+    #print("Classes %s", str(encoder.classes_))
     x_train, x_test, y_train, y_test = cv.train_test_split(x,
                                                            y,
-                                                           test_size=0.3)
+                                                           test_size=0.3,
+                                                           stratify=y.values)
     config = [
         {
-            "C":[1, 2, 4, 8, 10, 100, 100],
-            "kernel": ["linear"]
+            "C":[0.1, 0.5, 1, 2, 4, 8, 10, 100],
+            "kernel": ["linear"],
+            "probability": [True]
         },
         {
-            "C":[1, 2, 4, 8, 10, 100, 100],
+            "C":[0.1, 0.5, 1, 2, 4, 8, 10, 100],
             "kernel": ["poly"],
             "degree": [2, 3, 4, 5],
-            "coef0": [0.0, 0.2, 0.4, 0.6]
+            "coef0": [0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 2, 4, 8, 16],
+            "probability": [True],
         },
         {
-            "C":[1, 2, 4, 8, 10, 100, 100],
-            "kernel": ["sigmoid"]
+            "C":[0.1, 0.5, 1, 2, 4, 8, 10, 100],
+            "kernel": ["sigmoid"],
+            "probability": [True],
+
         },
         {
-            "C":[1, 2, 4, 8, 10, 100, 100],
-            "kernel": ["rbf"]
+            "C":[0.1, 0.5, 1, 2, 4, 8, 10, 100],
+            "kernel": ["rbf"],
+            "probability": [True],
         }
     ]
+    logger.info("training")
     if args.config is not None:
         with open(args.config) as config_file:
             config = json.load(config_file)
     model = train_model(x_train, y_train, config)
+    logger.info("trained")
     y_predict = model.predict(x_test)
-    score = metrics.f1_score(y_test, y_predict, df["class"].unique(),
-                             average="micro")
+    logger.info("true: %s predicted: %s", str(y_test["class"].values), str(y_predict))
+    score = metrics.f1_score(y_test, y_predict,
+                             average="macro")
+    print("Simple score {0}".format(model.score(x_test, y_test)))
     print("F1 score {0}".format(score))
-    print("Ideal parameters {0}".format(model.best_params_))
     model = train_model(x, y, model.best_params_)
     joblib.dump(model, args.output)
 
