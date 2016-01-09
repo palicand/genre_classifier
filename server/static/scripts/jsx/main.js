@@ -82,6 +82,7 @@ var Application = React.createClass({
     },
     render: function () {
         var options = {
+            title: {text: "Audio amplitude"},
             series: [{
                 name: "Amplitude",
                 data: this.state.amplitude
